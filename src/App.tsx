@@ -5,8 +5,10 @@ import { iCard, iProps } from "./utils/interfaces";
 import { MdAdd, MdClose } from "react-icons/md";
 import { v4 as uuid } from "uuid";
 import { addTaskX } from "./utils/helper";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 const App = () => {
+  const [parent, enableAnimations] = useAutoAnimate(/* optional config */);
   const [data, setData] = useState(db);
   const [text, setText] = useState<string>("");
 
@@ -21,7 +23,7 @@ const App = () => {
       <div className="flex justify-center">
         <main className="border rounded-md w-[1000px] min-h[400px] bg-slate-50 shadow-inner relative">
           {toggle && (
-            <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center rounded-md backdrop-blur-sm ">
+            <div className="absolute z-30 top-0 left-0 w-full h-full flex justify-center items-center rounded-md backdrop-blur-sm ">
               {" "}
               <div className="w-[600px] h-[300px] border rounded-md p-4 bg-white flex flex-col">
                 <div className="flex justify-end">
@@ -81,7 +83,7 @@ const App = () => {
           <section className="p-4 flex justify-between">
             {Object.values(data).map((el: iProps, idx: number) => {
               return (
-                <div key={idx} className="">
+                <div key={idx} className="" ref={parent}>
                   {el.data.map((el: iCard) => (
                     <Card
                       key={el.id}
